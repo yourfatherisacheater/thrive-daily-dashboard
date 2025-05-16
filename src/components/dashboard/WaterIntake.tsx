@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import DashboardCard from './DashboardCard';
-import { Cup } from 'lucide-react';
+import { CupSoda } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 
@@ -24,7 +24,7 @@ const WaterIntake = () => {
   return (
     <DashboardCard 
       title="Water Intake" 
-      icon={<Cup />}
+      icon={<CupSoda />}
       className="bg-white"
     >
       <div className="space-y-4">

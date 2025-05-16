@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Home, Smile, Cup, Moon, Heart, Weight, Book, Activity } from 'lucide-react';
+import { Home, Smile, CupSoda, Moon, Heart, Weight, Book, Activity } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -30,7 +30,7 @@ const menuItems = [
   {
     title: "Water Intake",
     url: "/water",
-    icon: Cup,
+    icon: CupSoda,
   },
   {
     title: "Breathing",
