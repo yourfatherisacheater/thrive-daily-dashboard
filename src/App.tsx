@@ -7,6 +7,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
+import MoodPage from "./pages/MoodPage";
+import WaterPage from "./pages/WaterPage";
+import BreathingPage from "./pages/BreathingPage";
+import SleepPage from "./pages/SleepPage";
+import QuickLogPage from "./pages/QuickLogPage";
+import WellnessGuidePage from "./pages/WellnessGuidePage";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -26,7 +32,36 @@ const App = () => (
                 <Index />
               </ProtectedRoute>
             } />
-            {/* Wrap all other routes with ProtectedRoute */}
+            <Route path="/mood" element={
+              <ProtectedRoute>
+                <MoodPage />
+              </ProtectedRoute>
+            } />
+            <Route path="/water" element={
+              <ProtectedRoute>
+                <WaterPage />
+              </ProtectedRoute>
+            } />
+            <Route path="/breathing" element={
+              <ProtectedRoute>
+                <BreathingPage />
+              </ProtectedRoute>
+            } />
+            <Route path="/sleep" element={
+              <ProtectedRoute>
+                <SleepPage />
+              </ProtectedRoute>
+            } />
+            <Route path="/quicklog" element={
+              <ProtectedRoute>
+                <QuickLogPage />
+              </ProtectedRoute>
+            } />
+            <Route path="/wellness" element={
+              <ProtectedRoute>
+                <WellnessGuidePage />
+              </ProtectedRoute>
+            } />
             <Route path="*" element={
               <ProtectedRoute>
                 <NotFound />

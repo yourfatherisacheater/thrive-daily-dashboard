@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Home, Smile, CupSoda, Moon, Heart, Weight, Book, Activity } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Home, Smile, CupSoda, Moon, Heart, Weight, Book, Activity, Zap, Users } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -14,6 +14,7 @@ import {
   SidebarHeader,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
+import { cn } from '@/lib/utils';
 
 // Menu items
 const menuItems = [
@@ -43,28 +44,25 @@ const menuItems = [
     icon: Moon,
   },
   {
-    title: "Health",
-    url: "/health",
-    icon: Heart,
+    title: "Quick Log",
+    url: "/quicklog",
+    icon: Zap,
   },
   {
-    title: "Weight",
-    url: "/weight",
-    icon: Weight,
-  },
-  {
-    title: "Journal",
-    url: "/journal",
-    icon: Book,
+    title: "Wellness Guide",
+    url: "/wellness",
+    icon: Users,
   },
 ];
 
 export function AppSidebar() {
+  const location = useLocation();
+
   return (
     <Sidebar>
       <SidebarHeader className="flex items-center justify-center p-4">
         <div className="flex flex-col items-center">
-          <h2 className="text-xl font-bold">Thrive</h2>
+          <h2 className="text-xl font-bold text-teal-600">WellTrack</h2>
           <p className="text-sm text-muted-foreground">Wellness Dashboard</p>
         </div>
         <SidebarTrigger className="absolute top-4 right-2" />
@@ -74,16 +72,25 @@ export function AppSidebar() {
           <SidebarGroupLabel>Menu</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {menuItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link to={item.url} className="flex items-center gap-3">
-                      <item.icon className="h-5 w-5" />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {menuItems.map((item) => {
+                const isActive = location.pathname === item.url;
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <Link 
+                        to={item.url} 
+                        className={cn(
+                          "flex items-center gap-3",
+                          isActive && "bg-teal-50 text-teal-700 border-r-2 border-teal-500"
+                        )}
+                      >
+                        <item.icon className="h-5 w-5" />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
