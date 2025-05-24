@@ -6,11 +6,14 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { Smile, CupSoda, Activity, Moon, Zap, Users, ArrowRight, Heart } from 'lucide-react';
 import { useMoodData } from '@/hooks/useMoodData';
+import { useWaterData } from '@/hooks/useWaterData';
 
 const Index = () => {
   const navigate = useNavigate();
   const { getMoodStats, moodEntries } = useMoodData();
-  const stats = getMoodStats();
+  const { getWaterStats } = useWaterData();
+  const moodStats = getMoodStats();
+  const waterStats = getWaterStats();
 
   const features = [
     {
@@ -131,7 +134,9 @@ const Index = () => {
             <Card>
               <CardContent className="p-6 text-center">
                 <CupSoda className="h-8 w-8 text-blue-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold">--</div>
+                <div className="text-2xl font-bold">
+                  {waterStats.daysTracked > 0 ? `${waterStats.averageDaily}ml` : '--'}
+                </div>
                 <p className="text-sm text-muted-foreground">Avg daily water</p>
               </CardContent>
             </Card>

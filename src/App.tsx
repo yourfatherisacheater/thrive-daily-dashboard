@@ -14,63 +14,66 @@ import SleepPage from "./pages/SleepPage";
 import QuickLogPage from "./pages/QuickLogPage";
 import WellnessGuidePage from "./pages/WellnessGuidePage";
 import { AuthProvider } from "./contexts/AuthContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={
-              <ProtectedRoute>
-                <Index />
-              </ProtectedRoute>
-            } />
-            <Route path="/mood" element={
-              <ProtectedRoute>
-                <MoodPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/water" element={
-              <ProtectedRoute>
-                <WaterPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/breathing" element={
-              <ProtectedRoute>
-                <BreathingPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/sleep" element={
-              <ProtectedRoute>
-                <SleepPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/quicklog" element={
-              <ProtectedRoute>
-                <QuickLogPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/wellness" element={
-              <ProtectedRoute>
-                <WellnessGuidePage />
-              </ProtectedRoute>
-            } />
-            <Route path="*" element={
-              <ProtectedRoute>
-                <NotFound />
-              </ProtectedRoute>
-            } />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/" element={
+                <ProtectedRoute>
+                  <Index />
+                </ProtectedRoute>
+              } />
+              <Route path="/mood" element={
+                <ProtectedRoute>
+                  <MoodPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/water" element={
+                <ProtectedRoute>
+                  <WaterPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/breathing" element={
+                <ProtectedRoute>
+                  <BreathingPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/sleep" element={
+                <ProtectedRoute>
+                  <SleepPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/quicklog" element={
+                <ProtectedRoute>
+                  <QuickLogPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/wellness" element={
+                <ProtectedRoute>
+                  <WellnessGuidePage />
+                </ProtectedRoute>
+              } />
+              <Route path="*" element={
+                <ProtectedRoute>
+                  <NotFound />
+                </ProtectedRoute>
+              } />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
