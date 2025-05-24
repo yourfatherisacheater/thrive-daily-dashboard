@@ -2,11 +2,16 @@
 import React from 'react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import MoodTracker from '@/components/dashboard/MoodTracker';
+import MoodTrendsChart from '@/components/dashboard/MoodTrendsChart';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calendar, TrendingUp, BarChart3 } from 'lucide-react';
+import { useMoodData } from '@/hooks/useMoodData';
 
 const MoodPage = () => {
+  const { getMoodStats } = useMoodData();
+  const stats = getMoodStats();
+
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -31,9 +36,7 @@ const MoodPage = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="h-[200px] flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg">
-                  <p className="text-muted-foreground">Mood trend chart will appear here</p>
-                </div>
+                <MoodTrendsChart />
               </CardContent>
             </Card>
 
@@ -63,11 +66,13 @@ const MoodPage = () => {
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>Most Common:</span>
-                      <span className="font-medium">Happy 😊</span>
+                      <span className="font-medium">
+                        {stats.mostCommon ? `${stats.mostCommon.mood} ${stats.mostCommon.emoji}` : 'No data yet'}
+                      </span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>This Week:</span>
-                      <span className="font-medium">5 entries</span>
+                      <span className="font-medium">{stats.weeklyCount} entries</span>
                     </div>
                   </div>
                 </CardContent>
