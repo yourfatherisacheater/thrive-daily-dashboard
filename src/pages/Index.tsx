@@ -5,9 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { Smile, CupSoda, Activity, Moon, Zap, Users, ArrowRight, Heart } from 'lucide-react';
+import { useMoodData } from '@/hooks/useMoodData';
 
 const Index = () => {
   const navigate = useNavigate();
+  const { getMoodStats, moodEntries } = useMoodData();
+  const stats = getMoodStats();
 
   const features = [
     {
@@ -54,6 +57,16 @@ const Index = () => {
     }
   ];
 
+  // Calculate real statistics
+  const daysTracked = moodEntries.length;
+  const happyMoods = moodEntries.filter(entry => 
+    entry.mood === 'Happy' || entry.mood === 'Excited'
+  ).length;
+  const happyPercentage = daysTracked > 0 ? Math.round((happyMoods / daysTracked) * 100) : 0;
+
+  // Only show statistics if we have adequate data (at least 3 mood entries)
+  const hasAdequateData = daysTracked >= 3;
+
   return (
     <DashboardLayout>
       <div className="space-y-8">
@@ -98,37 +111,39 @@ const Index = () => {
           ))}
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
-          <Card>
-            <CardContent className="p-6 text-center">
-              <Heart className="h-8 w-8 text-red-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold">7</div>
-              <p className="text-sm text-muted-foreground">Days tracked</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-6 text-center">
-              <Smile className="h-8 w-8 text-yellow-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold">85%</div>
-              <p className="text-sm text-muted-foreground">Happy days</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-6 text-center">
-              <CupSoda className="h-8 w-8 text-blue-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold">2.1L</div>
-              <p className="text-sm text-muted-foreground">Avg daily water</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-6 text-center">
-              <Moon className="h-8 w-8 text-purple-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold">7.3h</div>
-              <p className="text-sm text-muted-foreground">Avg sleep</p>
-            </CardContent>
-          </Card>
-        </div>
+        {/* Quick Stats - Only show when we have adequate data */}
+        {hasAdequateData && (
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
+            <Card>
+              <CardContent className="p-6 text-center">
+                <Heart className="h-8 w-8 text-red-500 mx-auto mb-2" />
+                <div className="text-2xl font-bold">{daysTracked}</div>
+                <p className="text-sm text-muted-foreground">Days tracked</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6 text-center">
+                <Smile className="h-8 w-8 text-yellow-500 mx-auto mb-2" />
+                <div className="text-2xl font-bold">{happyPercentage}%</div>
+                <p className="text-sm text-muted-foreground">Happy days</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6 text-center">
+                <CupSoda className="h-8 w-8 text-blue-500 mx-auto mb-2" />
+                <div className="text-2xl font-bold">--</div>
+                <p className="text-sm text-muted-foreground">Avg daily water</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6 text-center">
+                <Moon className="h-8 w-8 text-purple-500 mx-auto mb-2" />
+                <div className="text-2xl font-bold">--</div>
+                <p className="text-sm text-muted-foreground">Avg sleep</p>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
     </DashboardLayout>
   );
